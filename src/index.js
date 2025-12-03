@@ -1,7 +1,3 @@
-// display a default value for temp
-// when clicking up arrow, temp += 1
-// when clicking down arrow, temp -= 1
-
 const state = {
   tempNum: 72,
   tempValue: null,
@@ -22,7 +18,7 @@ const colorTempValue = (tempNum) => {
   } else if (tempNum <= 79) {
     tempValue.classList.replace(currentColor, 'orange');
   }
-}
+};
 
 const increaseTemp = (event) => {
   let tempValue = document.querySelector('#tempValue');
@@ -38,19 +34,11 @@ const decreaseTemp = (event) => {
   colorTempValue(state.tempNum);
 };
 
-// change color of temp text according to table in readme
-
-// temperature ranges change landscape in weather garden according to table in readme
-
-// register event handlers
-
 const registerEventHandlers = () => {
   const increaseTempControl = document.querySelector('#increaseTempControl');
   increaseTempControl.addEventListener('click', increaseTemp);
   const decreaseTempControl = document.querySelector('#decreaseTempControl');
   decreaseTempControl.addEventListener('click', decreaseTemp);
-  // const changeTempColor = document.querySelector('#tempValue');
-  // changeTempColor.addEventListener('', colorTempValue);
 };
 
 

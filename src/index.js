@@ -15,6 +15,12 @@ const colorTempValue = (tempNum) => {
     tempValue.classList.replace(currentColor, 'red');
   } else if (tempNum <= 49) {
     tempValue.classList.replace(currentColor, 'teal');
+  } else if (tempNum <= 59) {
+    tempValue.classList.replace(currentColor, 'green');
+  } else if (tempNum <= 69) {
+    tempValue.classList.replace(currentColor, 'yellow');
+  } else if (tempNum <= 79) {
+    tempValue.classList.replace(currentColor, 'orange');
   }
 }
 
@@ -29,6 +35,7 @@ const decreaseTemp = (event) => {
   let tempValue = document.querySelector('#tempValue');
   state.tempNum -= 1;
   tempValue.textContent = `${state.tempNum}`;
+  colorTempValue(state.tempNum);
 };
 
 // change color of temp text according to table in readme

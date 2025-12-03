@@ -1,7 +1,9 @@
 const state = {
   tempNum: 72,
   tempValue: null,
-  tempColor: null
+  tempColor: null,
+  gardenLandscape: null,
+  gardenLandscapeText: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
 };
 
 const colorTempValue = (tempNum) => {
@@ -20,11 +22,24 @@ const colorTempValue = (tempNum) => {
   }
 };
 
+const landscapeTempValue = (tempNum) => {
+  if (tempNum <= 59) {
+    state.gardenLandscape.textContent = '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
+  } else if (tempNum <= 69) {
+    state.gardenLandscape.textContent = '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
+  } else if (tempNum <= 79) {
+    state.gardenLandscape.textContent = '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
+  } else {
+    state.gardenLandscape.textContent = '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
+  }
+};
+
 const increaseTemp = (event) => {
   let tempValue = document.querySelector('#tempValue');
   state.tempNum += 1;
   tempValue.textContent = `${state.tempNum}`;
   colorTempValue(state.tempNum);
+  landscapeTempValue(state.tempNum);
 };
 
 const decreaseTemp = (event) => {
@@ -32,6 +47,7 @@ const decreaseTemp = (event) => {
   state.tempNum -= 1;
   tempValue.textContent = `${state.tempNum}`;
   colorTempValue(state.tempNum);
+  landscapeTempValue(state.tempNum);
 };
 
 const registerEventHandlers = () => {
@@ -46,6 +62,8 @@ const loadControls = () => {
   state.tempValue = document.getElementById('tempValue');
   state.tempValue.textContent = state.tempNum;
   state.tempValue.classList.add('orange');
+  state.gardenLandscape = document.getElementById('landscape');
+  state.gardenLandscape.textContent = state.gardenLandscapeText;
 };
 
 const onLoaded = () => {

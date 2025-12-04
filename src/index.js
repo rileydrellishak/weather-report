@@ -32,7 +32,7 @@ const landscapeRangesAndValues = {
   mild: '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃',
   nice: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
   hot: '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂'
-}
+};
 
 const landscapeTempValue = (tempNum) => {
   if (tempNum <= 59) {
@@ -60,6 +60,10 @@ const decreaseTemp = () => {
   tempValue.textContent = `${state.tempNum}`;
   colorTempValue(state.tempNum);
   landscapeTempValue(state.tempNum);
+};
+
+const convertKelvinToFahrenheit = (temp) => {
+  return ((temp - 273.15) * (9 / 5) + 32);
 };
 
 const skyColorsAndValues = {

@@ -81,7 +81,15 @@ const updateCityName = (event) => {
   let cityHeader = document.querySelector('#headerCityName');
   state.cityName = currentText;
   cityHeader.textContent = `${state.cityName}`;
-}
+};
+
+const resetCityNameButton = (event) => {
+  let cityHeader = document.querySelector('#headerCityName');
+  let currentText = document.querySelector('#cityNameInput');
+  state.cityName = 'Seattle';
+  cityHeader.textContent = `${state.cityName}`;
+  currentText.value = state.cityName;
+};
 
 const registerEventHandlers = () => {
   const increaseTempControl = document.querySelector('#increaseTempControl');
@@ -95,6 +103,9 @@ const registerEventHandlers = () => {
 
   const cityText = document.querySelector('#cityNameInput');
   cityText.addEventListener('keyup', updateCityName);
+
+  const resetCity = document.querySelector('#cityNameReset');
+  resetCity.addEventListener('click', resetCityNameButton);
 };
 
 const loadControls = () => {
@@ -110,7 +121,7 @@ const loadControls = () => {
 
   state.gardenContainer = document.getElementById('gardenContent');
   state.gardenContainer.classList.add('sunny');
-  
+
   state.headerCityName = document.getElementById('headerCityName');
   state.headerCityName.textContent = state.cityName;
 };

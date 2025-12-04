@@ -3,7 +3,10 @@ const state = {
   tempValue: null,
   tempColor: null,
   gardenLandscape: null,
-  gardenLandscapeText: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
+  gardenLandscapeText: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
+  gardenSkyElement: null,
+  gardenSkyText: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
+  gardenContainer: null
 };
 
 const colorTempValue = (tempNum) => {
@@ -34,7 +37,7 @@ const landscapeTempValue = (tempNum) => {
   }
 };
 
-const increaseTemp = (event) => {
+const increaseTemp = () => {
   let tempValue = document.querySelector('#tempValue');
   state.tempNum += 1;
   tempValue.textContent = `${state.tempNum}`;
@@ -42,7 +45,7 @@ const increaseTemp = (event) => {
   landscapeTempValue(state.tempNum);
 };
 
-const decreaseTemp = (event) => {
+const decreaseTemp = () => {
   let tempValue = document.querySelector('#tempValue');
   state.tempNum -= 1;
   tempValue.textContent = `${state.tempNum}`;
@@ -50,11 +53,31 @@ const decreaseTemp = (event) => {
   landscapeTempValue(state.tempNum);
 };
 
+const changeSky = () => {
+  let dropdownElement = document.getElementById('skySelect');
+  let currentSkyColor = state.gardenContainer.classList[1];
+  if (dropdownElement.value === 'Cloudy') {
+    state.gardenSkyElement.textContent = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
+    state.gardenContainer.classList.replace(currentSkyColor, 'cloudy');
+  } else if (dropdownElement.value === 'Rainy') {
+    state.gardenSkyElement.textContent = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
+    state.gardenContainer.classList.replace(currentSkyColor, 'rainy');
+  } else if (dropdownElement.value === 'Snowy') {
+    state.gardenSkyElement.textContent = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
+    state.gardenContainer.classList.replace(currentSkyColor, 'snowy');
+  } else {
+    state.gardenSkyElement.textContent = '☁️ ☁️ ☁️ ☀️ ☁️ ☁️';
+    state.gardenContainer.classList.replace(currentSkyColor, 'sunny');
+  }
+};
+
 const registerEventHandlers = () => {
   const increaseTempControl = document.querySelector('#increaseTempControl');
   increaseTempControl.addEventListener('click', increaseTemp);
   const decreaseTempControl = document.querySelector('#decreaseTempControl');
   decreaseTempControl.addEventListener('click', decreaseTemp);
+  const changeSkyControl = document.querySelector('#skySelect');
+  changeSkyControl.addEventListener('change', changeSky);
 };
 
 
@@ -64,6 +87,10 @@ const loadControls = () => {
   state.tempValue.classList.add('orange');
   state.gardenLandscape = document.getElementById('landscape');
   state.gardenLandscape.textContent = state.gardenLandscapeText;
+  state.gardenSkyElement = document.getElementById('sky');
+  state.gardenSkyElement.textContent = state.gardenSkyText;
+  state.gardenContainer = document.getElementById('gardenContent');
+  state.gardenContainer.classList.add('sunny');
 };
 
 const onLoaded = () => {

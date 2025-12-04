@@ -27,15 +27,22 @@ const colorTempValue = (tempNum) => {
   }
 };
 
+const landscapeRangesAndValues = {
+  cold: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲',
+  mild: '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃',
+  nice: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
+  hot: '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂'
+}
+
 const landscapeTempValue = (tempNum) => {
   if (tempNum <= 59) {
-    state.gardenLandscape.textContent = '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
+    state.gardenLandscape.textContent = landscapeRangesAndValues.cold;
   } else if (tempNum <= 69) {
-    state.gardenLandscape.textContent = '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
+    state.gardenLandscape.textContent = landscapeRangesAndValues.mild;
   } else if (tempNum <= 79) {
-    state.gardenLandscape.textContent = '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
+    state.gardenLandscape.textContent = landscapeRangesAndValues.nice;
   } else {
-    state.gardenLandscape.textContent = '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
+    state.gardenLandscape.textContent = landscapeRangesAndValues.hot;
   }
 };
 
@@ -72,17 +79,20 @@ const changeSky = () => {
 const updateCityName = (event) => {
   let currentText = document.querySelector('#cityNameInput').value;
   let cityHeader = document.querySelector('#headerCityName');
-  state.cityName = currentText
-  cityHeader.textContent = `${state.cityName}`
+  state.cityName = currentText;
+  cityHeader.textContent = `${state.cityName}`;
 }
 
 const registerEventHandlers = () => {
   const increaseTempControl = document.querySelector('#increaseTempControl');
   increaseTempControl.addEventListener('click', increaseTemp);
+
   const decreaseTempControl = document.querySelector('#decreaseTempControl');
   decreaseTempControl.addEventListener('click', decreaseTemp);
+
   const changeSkyControl = document.querySelector('#skySelect');
   changeSkyControl.addEventListener('change', changeSky);
+
   const cityText = document.querySelector('#cityNameInput');
   cityText.addEventListener('keyup', updateCityName);
 };
@@ -91,12 +101,16 @@ const loadControls = () => {
   state.tempValue = document.getElementById('tempValue');
   state.tempValue.textContent = state.tempNum;
   state.tempValue.classList.add('orange');
+
   state.gardenLandscape = document.getElementById('landscape');
   state.gardenLandscape.textContent = state.gardenLandscapeText;
+
   state.gardenSkyElement = document.getElementById('sky');
   state.gardenSkyElement.textContent = state.gardenSkyText;
+
   state.gardenContainer = document.getElementById('gardenContent');
   state.gardenContainer.classList.add('sunny');
+  
   state.headerCityName = document.getElementById('headerCityName');
   state.headerCityName.textContent = state.cityName;
 };

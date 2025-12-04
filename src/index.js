@@ -55,23 +55,20 @@ const decreaseTemp = () => {
   landscapeTempValue(state.tempNum);
 };
 
+const skyColorsAndValues = {
+  sunny: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
+  rainy: '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
+  snowy: '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
+  cloudy: '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️'
+};
+
 const changeSky = () => {
   let dropdownElement = document.getElementById('skySelect');
   let currentSkyColor = state.gardenContainer.classList[1];
-  if (dropdownElement.value === 'Cloudy') {
-    state.gardenSkyElement.textContent = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
-    state.gardenContainer.classList.replace(currentSkyColor, 'cloudy');
-  } else if (dropdownElement.value === 'Rainy') {
-    state.gardenSkyElement.textContent = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
-    state.gardenContainer.classList.replace(currentSkyColor, 'rainy');
-  } else if (dropdownElement.value === 'Snowy') {
-    state.gardenSkyElement.textContent = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
-    state.gardenContainer.classList.replace(currentSkyColor, 'snowy');
-  } else {
-    state.gardenSkyElement.textContent = '☁️ ☁️ ☁️ ☀️ ☁️ ☁️';
-    state.gardenContainer.classList.replace(currentSkyColor, 'sunny');
-  }
+  state.gardenSkyElement.textContent = skyColorsAndValues[dropdownElement.value.toLowerCase()];
+  state.gardenContainer.classList.replace(currentSkyColor, dropdownElement.value.toLowerCase());
 };
+
 const updateCityName = (event) => {
   let currentText = document.querySelector('#cityNameInput').value;
   let cityHeader = document.querySelector('#headerCityName');

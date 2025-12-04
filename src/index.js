@@ -1,3 +1,48 @@
+const proxyServerURL = 'https://ada-weather-report-proxy-server.onrender.com';
+
+const findLatAndLon = (cityName) => {
+  let lat, lon;
+  return axios.get(proxyServerURL + '/location', {params: {q: cityName}})
+    .then( (response) => {
+      lat = response.data[0].lat;
+      lon = response.data[0].lon;
+      console.log('success in findLatitudeAndLongitude!', lat, lon);
+      console.log({lat, lon});
+      return {lat, lon};
+    })
+    .catch( (error) => {
+      console.log(`${error}`);
+    });
+};
+
+const getWeatherFromLatAndLon = (latitude, longitude) => {
+  let temp;
+  return axios.get(proxyServerURL + '/weather', {params: {lat: latitude, lon: longitude}})
+    .then( (response) => {
+      let tempValue = document.querySelector('#tempValue');
+      temp = response.data.main.temp;
+      console.log(convertKelvinToFahrenheit(temp));
+      state.tempNum = convertKelvinToFahrenheit(temp);
+      colorTempValue(state.tempNum);
+      landscapeTempValue(state.tempNum);
+      tempValue.textContent = `${state.tempNum}`;
+      return convertKelvinToFahrenheit(temp);
+    })
+    .catch( (error) => {
+      console.log(`${error}`);
+    });
+};
+
+const getWeatherFromCityName = () => {
+  findLatAndLon(state.cityName)
+    .then((response) => {
+      return getWeatherFromLatAndLon(response.lat, response.lon);
+    })
+    .catch((error) => {
+      console.log(`${error}`);
+    });
+};
+
 const state = {
   tempNum: 72,
   tempValue: null,
@@ -110,6 +155,9 @@ const registerEventHandlers = () => {
 
   const resetCity = document.querySelector('#cityNameReset');
   resetCity.addEventListener('click', resetCityNameButton);
+
+  const getCurrentTemp = document.querySelector('#currentTempButton');
+  getCurrentTemp.addEventListener('click', getWeatherFromCityName);
 };
 
 const loadControls = () => {

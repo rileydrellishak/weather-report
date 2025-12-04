@@ -6,7 +6,9 @@ const state = {
   gardenLandscapeText: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
   gardenSkyElement: null,
   gardenSkyText: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
-  gardenContainer: null
+  gardenContainer: null,
+  headerCityName: null,
+  cityName: 'Seattle'
 };
 
 const colorTempValue = (tempNum) => {
@@ -70,6 +72,12 @@ const changeSky = () => {
     state.gardenContainer.classList.replace(currentSkyColor, 'sunny');
   }
 };
+const updateCityName = (event) => {
+  let currentText = document.querySelector('#cityNameInput').value;
+  let cityHeader = document.querySelector('#headerCityName');
+  state.cityName = currentText
+  cityHeader.textContent = `${state.cityName}`
+}
 
 const registerEventHandlers = () => {
   const increaseTempControl = document.querySelector('#increaseTempControl');
@@ -78,8 +86,9 @@ const registerEventHandlers = () => {
   decreaseTempControl.addEventListener('click', decreaseTemp);
   const changeSkyControl = document.querySelector('#skySelect');
   changeSkyControl.addEventListener('change', changeSky);
+  const cityText = document.querySelector('#cityNameInput');
+  cityText.addEventListener('keyup', updateCityName);
 };
-
 
 const loadControls = () => {
   state.tempValue = document.getElementById('tempValue');
@@ -91,6 +100,8 @@ const loadControls = () => {
   state.gardenSkyElement.textContent = state.gardenSkyText;
   state.gardenContainer = document.getElementById('gardenContent');
   state.gardenContainer.classList.add('sunny');
+  state.headerCityName = document.getElementById('headerCityName');
+  state.headerCityName.textContent = state.cityName;
 };
 
 const onLoaded = () => {

@@ -3,7 +3,9 @@ const state = {
   tempValue: null,
   tempColor: null,
   gardenLandscape: null,
-  gardenLandscapeText: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
+  gardenLandscapeText: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
+  headerCityName: null,
+  cityName: 'Seattle'
 };
 
 const colorTempValue = (tempNum) => {
@@ -50,13 +52,21 @@ const decreaseTemp = (event) => {
   landscapeTempValue(state.tempNum);
 };
 
+const updateCityName = (event) => {
+  let currentText = document.querySelector('#cityNameInput').value;
+  let cityHeader = document.querySelector('#headerCityName');
+  state.cityName = currentText
+  cityHeader.textContent = `${state.cityName}`
+}
+
 const registerEventHandlers = () => {
   const increaseTempControl = document.querySelector('#increaseTempControl');
   increaseTempControl.addEventListener('click', increaseTemp);
   const decreaseTempControl = document.querySelector('#decreaseTempControl');
   decreaseTempControl.addEventListener('click', decreaseTemp);
+  const cityText = document.querySelector('#cityNameInput');
+  cityText.addEventListener('keyup', updateCityName);
 };
-
 
 const loadControls = () => {
   state.tempValue = document.getElementById('tempValue');
@@ -64,6 +74,8 @@ const loadControls = () => {
   state.tempValue.classList.add('orange');
   state.gardenLandscape = document.getElementById('landscape');
   state.gardenLandscape.textContent = state.gardenLandscapeText;
+  state.headerCityName = document.getElementById('headerCityName');
+  state.headerCityName.textContent = state.cityName;
 };
 
 const onLoaded = () => {

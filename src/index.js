@@ -6,8 +6,6 @@ const findLatAndLon = (cityName) => {
     .then( (response) => {
       lat = response.data[0].lat;
       lon = response.data[0].lon;
-      console.log('success in findLatitudeAndLongitude!', lat, lon);
-      console.log({lat, lon});
       return {lat, lon};
     })
     .catch( (error) => {
@@ -19,13 +17,11 @@ const getWeatherFromLatAndLon = (latitude, longitude) => {
   let temp;
   return axios.get(proxyServerURL + '/weather', {params: {lat: latitude, lon: longitude}})
     .then( (response) => {
-      let tempValue = document.querySelector('#tempValue');
       temp = response.data.main.temp;
-      console.log(convertKelvinToFahrenheit(temp));
       state.tempNum = convertKelvinToFahrenheit(temp);
       colorTempValue(state.tempNum);
       landscapeTempValue(state.tempNum);
-      tempValue.textContent = `${state.tempNum}`;
+      state.tempValue.textContent = `${state.tempNum}`;
       return convertKelvinToFahrenheit(temp);
     })
     .catch( (error) => {
@@ -49,7 +45,7 @@ const state = {
   tempColor: null,
   gardenLandscape: null,
   gardenLandscapeText: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
-  gardenSkyElement: null,
+  gardenSkyline: null,
   gardenSkyText: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
   gardenContainer: null,
   headerCityName: null,
@@ -57,18 +53,17 @@ const state = {
 };
 
 const colorTempValue = (tempNum) => {
-  let tempValue = document.querySelector('#tempValue');
-  let currentColor = tempValue.classList;
+  let currentColor = state.tempValue.classList;
   if (tempNum >= 80) {
-    tempValue.classList.replace(currentColor, 'red');
+    state.tempValue.classList.replace(currentColor, 'red');
   } else if (tempNum <= 49) {
-    tempValue.classList.replace(currentColor, 'teal');
+    state.tempValue.classList.replace(currentColor, 'teal');
   } else if (tempNum <= 59) {
-    tempValue.classList.replace(currentColor, 'green');
+    state.tempValue.classList.replace(currentColor, 'green');
   } else if (tempNum <= 69) {
-    tempValue.classList.replace(currentColor, 'yellow');
+    state.tempValue.classList.replace(currentColor, 'yellow');
   } else if (tempNum <= 79) {
-    tempValue.classList.replace(currentColor, 'orange');
+    state.tempValue.classList.replace(currentColor, 'orange');
   }
 };
 
@@ -92,23 +87,21 @@ const landscapeTempValue = (tempNum) => {
 };
 
 const increaseTemp = () => {
-  let tempValue = document.querySelector('#tempValue');
   state.tempNum += 1;
-  tempValue.textContent = `${state.tempNum}`;
+  state.tempValue.textContent = `${state.tempNum}`;
   colorTempValue(state.tempNum);
   landscapeTempValue(state.tempNum);
 };
 
 const decreaseTemp = () => {
-  let tempValue = document.querySelector('#tempValue');
   state.tempNum -= 1;
-  tempValue.textContent = `${state.tempNum}`;
+  state.tempValue.textContent = `${state.tempNum}`;
   colorTempValue(state.tempNum);
   landscapeTempValue(state.tempNum);
 };
 
 const convertKelvinToFahrenheit = (temp) => {
-  return ((temp - 273.15) * (9 / 5) + 32);
+  return Math.round(((temp - 273.15) * (9 / 5) + 32));
 };
 
 const skyColorsAndValues = {
@@ -121,7 +114,7 @@ const skyColorsAndValues = {
 const changeSky = () => {
   let dropdownElement = document.getElementById('skySelect');
   let currentSkyColor = state.gardenContainer.classList[1];
-  state.gardenSkyElement.textContent = skyColorsAndValues[dropdownElement.value.toLowerCase()];
+  state.gardenSkyline.textContent = skyColorsAndValues[dropdownElement.value.toLowerCase()];
   state.gardenContainer.classList.replace(currentSkyColor, dropdownElement.value.toLowerCase());
 };
 
@@ -133,8 +126,8 @@ const updateCityName = (event) => {
 };
 
 const resetCityNameButton = (event) => {
-  let cityHeader = document.querySelector('#headerCityName');
   let currentText = document.querySelector('#cityNameInput');
+  let cityHeader = document.querySelector('#headerCityName');
   state.cityName = 'Seattle';
   cityHeader.textContent = `${state.cityName}`;
   currentText.value = state.cityName;
@@ -168,8 +161,8 @@ const loadControls = () => {
   state.gardenLandscape = document.getElementById('landscape');
   state.gardenLandscape.textContent = state.gardenLandscapeText;
 
-  state.gardenSkyElement = document.getElementById('sky');
-  state.gardenSkyElement.textContent = state.gardenSkyText;
+  state.gardenSkyline = document.getElementById('sky');
+  state.gardenSkyline.textContent = state.gardenSkyText;
 
   state.gardenContainer = document.getElementById('gardenContent');
   state.gardenContainer.classList.add('sunny');

@@ -118,14 +118,14 @@ const changeSky = () => {
   state.gardenContainer.classList.replace(currentSkyColor, dropdownElement.value.toLowerCase());
 };
 
-const updateCityName = (event) => {
+const updateCityName = () => {
   let currentText = document.querySelector('#cityNameInput').value;
   let cityHeader = document.querySelector('#headerCityName');
   state.cityName = currentText;
   cityHeader.textContent = `${state.cityName}`;
 };
 
-const resetCityNameButton = (event) => {
+const resetCityNameButton = () => {
   let currentText = document.querySelector('#cityNameInput');
   let cityHeader = document.querySelector('#headerCityName');
   state.cityName = 'Seattle';
